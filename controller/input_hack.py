@@ -7,11 +7,14 @@
 import nbformat
 from nbconvert import HTMLExporter
 import sys
+import io
+
+input_stream = io.TextIOWrapper(sys.stdin.buffer, encoding='utf-8')
 
 #fileContent = sys.argv[1]
 
 fileContent = ''
-for line in sys.stdin:
+for line in input_stream:
         fileContent = u''.join(fileContent + line)
 
 tnb = nbformat.reads(fileContent, as_version=4)
