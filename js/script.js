@@ -65,11 +65,12 @@
 		filename = data.dir + "/" + filename;
 		setUpEditor();
 		$.get(url, {filename: filename}).success(function (response) {
-			if(response.data) {
+			if(response) {
 				$('#nbviewer-loader').remove();
 				var iFrame = $('#nbviewer-frame');
 				var doc = iFrame[0].contentDocument || iFrame[0].contentWindow.document;
-				doc.write(response.data.content);
+				//doc.write(response.data.content);
+				doc.write(response);
 				doc.close();
 			} else {
 				alert(response.error);
@@ -81,11 +82,12 @@
 		url = OC.generateUrl('/apps/swanviewer/publicload');
 		setUpEditor();
 		$.get(url, {filename: filename, token: token}).success(function (response) {
-			if(response.data) {
+			if(response) {
 				$('#nbviewer-loader').remove();
 				var iFrame = $('#nbviewer-frame');
 				var doc = iFrame[0].contentDocument || iFrame[0].contentWindow.document;
-				doc.write(response.data.content);
+				//doc.write(response.data.content);
+				doc.write(response);
 				doc.close();
 			} else {
 				alert(response.error);
@@ -96,12 +98,13 @@
 	var onViewPublicSingleFile = function(token) {
 		url = OC.generateUrl('/apps/swanviewer/publicload');
 		setUpEditor();
-		$.get(url, {token: token}).success(function (response) {
-			if(response.data) {
+		$.get(url, {token: token, "x-access-token": OC["X-Access-Token"]}).success(function (response) {
+			if(response) {
 				$('#nbviewer-loader').remove();
 				var iFrame = $('#nbviewer-frame');
 				var doc = iFrame[0].contentDocument || iFrame[0].contentWindow.document;
-				doc.write(response.data.content);
+				//doc.write(response.data.content);
+				doc.write(response);
 				doc.close();
 			} else {
 				alert(response.error);
@@ -219,7 +222,7 @@
 
 		// Doesn't work with IE below 9
 		if(!$.browser.msie || ($.browser.msie && $.browser.version >= 9)){
-			if ($('#isPublic').val() && $('#mimetype').val() === 'application/pynb' && $("input#passwordProtected").val() === "false") {
+			if ($('#isPublic').val() && $('#mimetype').val() === 'application/pynb') {
 				var sharingToken = $('#sharingToken').val();
 				onViewPublicSingleFile(sharingToken);
 				// add Open in SWAN button
