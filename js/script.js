@@ -65,11 +65,12 @@
 		filename = data.dir + "/" + filename;
 		setUpEditor();
 		$.get(url, {filename: filename}).success(function (response) {
-			if(response.data) {
+			if(response) {
 				$('#nbviewer-loader').remove();
 				var iFrame = $('#nbviewer-frame');
 				var doc = iFrame[0].contentDocument || iFrame[0].contentWindow.document;
-				doc.write(response.data.content);
+				//doc.write(response.data.content);
+				doc.write(response);
 				doc.close();
 			} else {
 				alert(response.error);
@@ -81,11 +82,12 @@
 		url = OC.generateUrl('/apps/swanviewer/publicload');
 		setUpEditor();
 		$.get(url, {filename: filename, token: token}).success(function (response) {
-			if(response.data) {
+			if(response) {
 				$('#nbviewer-loader').remove();
 				var iFrame = $('#nbviewer-frame');
 				var doc = iFrame[0].contentDocument || iFrame[0].contentWindow.document;
-				doc.write(response.data.content);
+				//doc.write(response.data.content);
+				doc.write(response);
 				doc.close();
 			} else {
 				alert(response.error);
