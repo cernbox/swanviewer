@@ -22,6 +22,7 @@ $container = $app->getContainer();
 $domains = \OC::$server->getConfig()->getSystemValue("cbox.swan.cspdomains", ['cdnjs.cloudflare.com', 'root.cern.ch']);
 $policy = new \OCP\AppFramework\Http\EmptyContentSecurityPolicy();
 foreach($domains as $domain) {
+        $policy->addAllowedImageDomain($domain);
         $policy->addAllowedScriptDomain($domain);
         $policy->addAllowedFrameDomain($domain);
         $policy->addAllowedStyleDomain($domain);
